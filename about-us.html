@@ -6,8 +6,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Devion - IT Solution</title>
-        <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
-        <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+        <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/svg+xml">
         <!--- End favicon-->
         <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&amp;display=swap" rel="stylesheet">
         <!-- End google font  -->
@@ -20,6 +20,7 @@
         <!-- Code Editor  -->
         <link rel="stylesheet" href="assets/css/main.css">
         <link rel="stylesheet" href="assets/css/app.min.css">
+        <link rel="stylesheet" href="assets/css/toast.css">
     </head>
     <body>
         <div class="optech-preloader-wrap">
@@ -562,6 +563,16 @@
                 </div>
             </div>
         </footer>
+        <!-- Toast Notification -->
+        <div id="success-toast" class="optech-toast" style="display: none;">
+            <div class="optech-toast-content">
+                <div class="toast-message">
+                    <img src="assets/images/iconbox/mail-check.svg" alt="" class="message-icon success-icon">
+                    <img src="assets/images/iconbox/mail-close.svg" alt="" class="message-icon error-icon" style="display: none;">
+                    <span class="message-text">Message sent successfully!</span>
+                </div>
+            </div>
+        </div>
         <!-- scripts -->
         <script src="assets/js/jquery-3.7.1.min.js"></script>
         <script src="assets/js/bootstrap.bundle.min.js"></script>
@@ -580,5 +591,6 @@
         <script src="assets/js/aos.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3&amp;key=AIzaSyArZVfNvjnLNwJZlLJKuOiWHZ6vtQzzb1Y"></script>
         <script src="assets/js/app.js"></script>
+        <script src="assets/js/contact-form.js"></script>
     </body>
 </html>
