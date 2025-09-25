@@ -46,6 +46,14 @@
     margin-right: 8px;
 }
 
+.success-icon path {
+    fill: #0066FF;
+}
+
+.error-icon path {
+    fill: #dc3545;
+}
+
 .message-text {
     display: inline-block;
     vertical-align: middle;
