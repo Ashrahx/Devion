@@ -178,30 +178,60 @@
                                 <label for="country">Country / Region</label>
                                 <select id="country" required>
                                     <option value="">Select a country...</option>
-                                    <option value="MX">Mexico</option>
-                                    <option value="US">United States</option>
-                                    <option value="CA">Canada</option>
+                                    <!-- América Latina -->
+                                    <option value="AR">Argentina</option>
+                                    <option value="BO">Bolivia</option>
+                                    <option value="BR">Brasil</option>
+                                    <option value="CL">Chile</option>
+                                    <option value="CO">Colombia</option>
+                                    <option value="CR">Costa Rica</option>
+                                    <option value="CU">Cuba</option>
+                                    <option value="DO">República Dominicana</option>
+                                    <option value="EC">Ecuador</option>
+                                    <option value="SV">El Salvador</option>
+                                    <option value="GT">Guatemala</option>
+                                    <option value="GY">Guyana</option>
+                                    <option value="HT">Haití</option>
+                                    <option value="HN">Honduras</option>
+                                    <option value="JM">Jamaica</option>
+                                    <option value="MX">México</option>
+                                    <option value="NI">Nicaragua</option>
+                                    <option value="PA">Panamá</option>
+                                    <option value="PY">Paraguay</option>
+                                    <option value="PE">Perú</option>
+                                    <option value="PR">Puerto Rico</option>
+                                    <option value="SR">Surinam</option>
+                                    <option value="TT">Trinidad y Tobago</option>
+                                    <option value="UY">Uruguay</option>
+                                    <option value="VE">Venezuela</option>
+
+                                    <!-- América del Norte -->
+                                    <option value="US">Estados Unidos</option>
+                                    <option value="CA">Canadá</option>
+
                                 </select>
+                            </div>
+                            <div class="optech-checkout-field">
+                                <label for="zipcode">ZIP Code</label>
+                                <input type="text" id="zipcode" required>
+                                <div id="zipcode-loading" class="loading-spinner" style="display: none;">
+                                    <i class="ri-loader-4-line"></i> Searching...
+                                </div>
                             </div>
                             <div class="optech-checkout-field">
                                 <label for="street">Street address</label>
                                 <input type="text" id="street" class="house-number" placeholder="House number and street name" required>
                                 <input type="text" id="street2" placeholder="Apartment, suite, unit, etc. (optional)">
                             </div>
-                            <div class="optech-checkout-field">
+                            <div class="optech-checkout-field" >
                                 <label for="city">Town / City</label>
-                                <input type="text" id="city" required>
+                                <input type="text" id="city" required disabled>
                             </div>
                             <div class="optech-checkout-field dropdown">
                                 <label for="state">State</label>
-                                <select id="state" required>
+                                <select id="state" required disabled>
                                     <option value="">Select a state...</option>
-                                    <option value="TX">Texas</option>
                                 </select>
-                            </div>
-                            <div class="optech-checkout-field">
-                                <label for="zipcode">ZIP Code</label>
-                                <input type="text" id="zipcode" required>
                             </div>
                             <div class="optech-checkout-field">
                                 <label for="phone">Phone</label>
@@ -286,7 +316,7 @@
                                     </div> -->
 
                                     <!-- Oxxo Pay -->
-                                    <!-- <div class="payment-option">
+                                    <div class="payment-option">
                                         <input id="oxxo-payment" name="payment-method" type="radio" value="oxxo">
                                         <label for="oxxo-payment" class="payment-label">
                                             <div class="payment-icon">
@@ -310,7 +340,7 @@
                                             </div>
                                         </label>
                                     </div>
-                                </div> -->
+                                </div>
 
                                 <!-- Formulario de Tarjeta -->
                                 <div id="card-form" class="card-form mt-4" style="display: none;">
@@ -355,7 +385,7 @@
                                 </div> -->
 
                                 <!-- Información de Oxxo Pay -->
-                                <!-- <div id="oxxo-info" class="oxxo-info mt-4" style="display: none;">
+                                <div id="oxxo-info" class="oxxo-info mt-4" style="display: none;">
                                     <div class="alert alert-info">
                                         <h6 class="alert-heading">Oxxo Pay Instructions</h6>
                                         <p class="mb-2 small">After placing your order, you will receive a payment reference number via email.</p>
@@ -367,7 +397,7 @@
                                         </ul>
                                         <p class="mb-0 small"><strong>Payment must be made within 24 hours</strong></p>
                                     </div>
-                                </div> -->
+                                </div>
                                 <span class="mt-4">All payments are secure and encrypted.</span>
                                 <p class="privacy-policy">
                                     Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a href="./terms-and-privacy.html">privacy policy</a>.
@@ -483,7 +513,6 @@
         <script src="assets/js/product-increment.js"></script>
         <script src="assets/js/top-to-bottom.js"></script>
         <script src="assets/js/aos.js"></script>
-        <script src="https://www.paypal.com/sdk/js?client-id=AfakkHFq6TNiB8DjicBPqaBt6dTtPZQssNpcp3-UxbWl6XuFkeYpoxCPJLmrwxS_Ip-Vd1Ln15uhW2IF&buyer-country=MX&currency=USD&components=buttons&disable-funding=venmo,paylater,card"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3&amp;key=AIzaSyArZVfNvjnLNwJZlLJKuOiWHZ6vtQzzb1Y"></script>
         <script src="assets/js/app.js"></script>
         <script src="assets/js/cart.js"></script>

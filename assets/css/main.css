@@ -1601,3 +1601,19 @@ a.log-in-btn:hover:after {
 .cart-btn:hover {
     background: rgba(0,0,0,0.05);
 }
+
+.loading-spinner {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.loading-spinner i {
+    animation: spin 1s linear infinite;
+    margin-right: 5px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
