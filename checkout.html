@@ -196,6 +196,7 @@
                                 <label for="state">State</label>
                                 <select id="state" required>
                                     <option value="">Select a state...</option>
+                                    <option value="TX">Texas</option>
                                 </select>
                             </div>
                             <div class="optech-checkout-field">
@@ -210,7 +211,7 @@
                                 <label for="email">Email address</label>
                                 <input type="email" id="email" required>
                             </div>
-                                <div class="optech-checkout-field checkout-additional-information">
+                                <div class="optech-checkout-field checkout-additional-information mb-4">
                                     <h5>Additional Information</h5>
                                     <label>Order notes (optional)</label>
                                     <textarea name="textarea" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
@@ -237,135 +238,141 @@
                                     </li>
                                 </ul>
                                 <!-- Métodos de pago -->
-<div class="payment-methods">
-    <h6 class="mb-3">Payment Methods</h6>
-    
-    <!-- PayPal -->
-    <div class="payment-option mb-3">
-        <input id="paypal-payment" name="payment-method" type="radio" value="paypal">
-        <label for="paypal-payment" class="payment-label">
-            <div class="payment-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.0673 8.47768C20.5591 9.35823 20.6237 10.4924 20.3676 11.8053C19.627 15.6107 17.0916 16.9253 13.8536 16.9253H13.3536C12.9583 16.9253 12.6216 17.214 12.5596 17.6047L12.519 17.8253L11.8896 21.818L11.857 21.988C11.795 22.3787 11.4583 22.6667 11.063 22.6667H7.72031C7.42365 22.6667 7.19698 22.402 7.24298 22.1093L7.41807 21H8.9367L9.88603 14.9793H11.2716C15.9496 14.9793 19.0209 12.7768 20.0673 8.47768ZM17.1066 3.38784C17.8693 4.25635 18.0908 5.19891 17.8597 6.67324C17.8405 6.79594 17.82 6.91391 17.7973 7.03253C17.0621 10.8057 14.7087 12.4793 10.8417 12.4793H8.95703C8.32647 12.4793 7.78368 12.8928 7.60372 13.4811L7.58913 13.4788L6.65969 19.3733H3.12169C3.08991 19.3733 3.06598 19.3454 3.07097 19.3136L5.66905 2.80233C5.74174 2.34036 6.13984 2 6.6075 2H12.583C14.7658 2 16.2998 2.46869 17.1066 3.38784Z"></path></svg>
-            </div>
-            <div class="payment-info">
-                <span class="payment-title">PayPal</span>
-                <span class="payment-desc">Pay securely with your PayPal account</span>
-            </div>
-        </label>
-    </div>
+                                <div class="payment-methods">
+                                    <h6 class="mb-3">Payment Methods</h6>
+                                    
+                                    <!-- PayPal -->
+                                    <div class="payment-option mb-3">
+                                        <input id="paypal-payment" name="payment-method" type="radio" value="paypal">
+                                        <label for="paypal-payment" class="payment-label">
+                                            <div class="payment-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.0673 8.47768C20.5591 9.35823 20.6237 10.4924 20.3676 11.8053C19.627 15.6107 17.0916 16.9253 13.8536 16.9253H13.3536C12.9583 16.9253 12.6216 17.214 12.5596 17.6047L12.519 17.8253L11.8896 21.818L11.857 21.988C11.795 22.3787 11.4583 22.6667 11.063 22.6667H7.72031C7.42365 22.6667 7.19698 22.402 7.24298 22.1093L7.41807 21H8.9367L9.88603 14.9793H11.2716C15.9496 14.9793 19.0209 12.7768 20.0673 8.47768ZM17.1066 3.38784C17.8693 4.25635 18.0908 5.19891 17.8597 6.67324C17.8405 6.79594 17.82 6.91391 17.7973 7.03253C17.0621 10.8057 14.7087 12.4793 10.8417 12.4793H8.95703C8.32647 12.4793 7.78368 12.8928 7.60372 13.4811L7.58913 13.4788L6.65969 19.3733H3.12169C3.08991 19.3733 3.06598 19.3454 3.07097 19.3136L5.66905 2.80233C5.74174 2.34036 6.13984 2 6.6075 2H12.583C14.7658 2 16.2998 2.46869 17.1066 3.38784Z"></path></svg>
+                                            </div>
+                                            <div class="payment-info">
+                                                <span class="payment-title">PayPal</span>
+                                                <span class="payment-desc">Pay securely with your PayPal account</span>
+                                            </div>
+                                        </label>
+                                    </div>
 
-    <!-- Tarjeta de Crédito/Débito -->
-    <div class="payment-option mb-3">
-        <input id="card-payment" name="payment-method" type="radio" value="card">
-        <label for="card-payment" class="payment-label">
-            <div class="payment-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/>
-                </svg>
-            </div>
-            <div class="payment-info">
-                <span class="payment-title">Credit/Debit Card</span>
-                <span class="payment-desc">Pay with your credit or debit card</span>
-            </div>
-        </label>
-    </div>
+                                    <!-- Tarjeta de Crédito/Débito -->
+                                    <div class="payment-option mb-3">
+                                        <input id="card-payment" name="payment-method" type="radio" value="card">
+                                        <label for="card-payment" class="payment-label">
+                                            <div class="payment-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                                    <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/>
+                                                </svg>
+                                            </div>
+                                            <div class="payment-info">
+                                                <span class="payment-title">Credit/Debit Card</span>
+                                                <span class="payment-desc">Pay with your credit or debit card</span>
+                                            </div>
+                                        </label>
+                                    </div>
 
-    <!-- Mercado Pago -->
-    <div class="payment-option mb-3">
-        <input id="mercadopago-payment" name="payment-method" type="radio" value="mercadopago">
-        <label for="mercadopago-payment" class="payment-label">
-            <div class="payment-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" fill="currentColor"><title>Mercado Pago</title><path d="M11.115 16.479a.93.927 0 0 1-.939-.886c-.002-.042-.006-.155-.103-.155-.04 0-.074.023-.113.059-.112.103-.254.206-.46.206a.816.814 0 0 1-.305-.066c-.535-.214-.542-.578-.521-.725.006-.038.007-.08-.02-.11l-.032-.03h-.034c-.027 0-.055.012-.093.039a.788.786 0 0 1-.454.16.7.699 0 0 1-.253-.05c-.708-.27-.65-.928-.617-1.126.005-.041-.005-.072-.03-.092l-.05-.04-.047.043a.728.726 0 0 1-.505.203.73.728 0 0 1-.732-.725c0-.4.328-.722.732-.722.364 0 .675.27.721.63l.026.195.11-.165c.01-.018.307-.46.852-.46.102 0 .21.016.316.05.434.13.508.52.519.68.008.094.075.1.09.1.037 0 .064-.024.083-.045a.746.744 0 0 1 .54-.225c.128 0 .263.03.402.09.69.293.379 1.158.374 1.167-.058.144-.061.207-.005.244l.027.013h.02c.03 0 .07-.014.134-.035.093-.032.235-.08.367-.08a.944.942 0 0 1 .94.93.936.934 0 0 1-.94.928zm7.302-4.171c-1.138-.98-3.768-3.24-4.481-3.77-.406-.302-.685-.462-.928-.533a1.559 1.554 0 0 0-.456-.07c-.182 0-.376.032-.58.095-.46.145-.918.505-1.362.854l-.023.018c-.414.324-.84.66-1.164.73a1.986 1.98 0 0 1-.43.049c-.362 0-.687-.104-.81-.258-.02-.025-.007-.066.04-.125l.008-.008 1-1.067c.783-.774 1.525-1.506 3.23-1.545h.085c1.062 0 2.12.469 2.24.524a7.03 7.03 0 0 0 3.056.724c1.076 0 2.188-.263 3.354-.795a9.135 9.11 0 0 0-.405-.317c-1.025.44-2.003.66-2.946.66-.962 0-1.925-.229-2.858-.68-.05-.022-1.22-.567-2.44-.57-.032 0-.065 0-.096.002-1.434.033-2.24.536-2.782.976-.528.013-.982.138-1.388.25-.361.1-.673.186-.979.185-.125 0-.35-.01-.37-.012-.35-.01-2.115-.437-3.518-.962-.143.1-.28.203-.415.31 1.466.593 3.25 1.053 3.812 1.089.157.01.323.027.491.027.372 0 .744-.103 1.104-.203.213-.059.446-.123.692-.17l-.196.194-1.017 1.087c-.08.08-.254.294-.14.557a.705.703 0 0 0 .268.292c.243.162.677.27 1.08.271.152 0 .297-.015.43-.044.427-.095.874-.448 1.349-.82.377-.296.913-.672 1.323-.782a1.494 1.49 0 0 1 .37-.05.611.61 0 0 1 .095.005c.27.034.533.125 1.003.472.835.62 4.531 3.815 4.566 3.846.002.002.238.203.22.537-.007.186-.11.352-.294.466a.902.9 0 0 1-.484.15.804.802 0 0 1-.428-.124c-.014-.01-1.28-1.157-1.746-1.543-.074-.06-.146-.115-.22-.115a.122.122 0 0 0-.096.045c-.073.09.01.212.105.294l1.48 1.47c.002 0 .184.17.204.395.012.244-.106.447-.35.606a.957.955 0 0 1-.526.171.766.764 0 0 1-.42-.127l-.214-.206a21.035 20.978 0 0 0-1.08-1.009c-.072-.058-.148-.112-.221-.112a.127.127 0 0 0-.094.038c-.033.037-.056.103.028.212a.698.696 0 0 0 .075.083l1.078 1.198c.01.01.222.26.024.511l-.038.048a1.18 1.178 0 0 1-.1.096c-.184.15-.43.164-.527.164a.8.798 0 0 1-.147-.012c-.106-.018-.178-.048-.212-.089l-.013-.013c-.06-.06-.602-.609-1.054-.98-.059-.05-.133-.11-.21-.11a.128.128 0 0 0-.096.042c-.09.096.044.24.1.293l.92 1.003a.204.204 0 0 1-.033.062c-.033.044-.144.155-.479.196a.91.907 0 0 1-.122.007c-.345 0-.712-.164-.902-.264a1.343 1.34 0 0 0 .13-.576 1.368 1.365 0 0 0-1.42-1.357c.024-.342-.025-.99-.697-1.274a1.455 1.452 0 0 0-.575-.125c-.146 0-.287.025-.42.075a1.153 1.15 0 0 0-.671-.564 1.52 1.515 0 0 0-.494-.085c-.28 0-.537.08-.767.242a1.168 1.165 0 0 0-.903-.43 1.173 1.17 0 0 0-.82.335c-.287-.217-1.425-.93-4.467-1.613a17.39 17.344 0 0 1-.692-.189 4.822 4.82 0 0 0-.077.494l.67.157c3.108.682 4.136 1.391 4.309 1.525a1.145 1.142 0 0 0-.09.442 1.16 1.158 0 0 0 1.378 1.132c.096.467.406.821.879 1.003a1.165 1.162 0 0 0 .415.08c.09 0 .179-.012.266-.034.086.22.282.493.722.668a1.233 1.23 0 0 0 .457.094c.122 0 .241-.022.355-.063a1.373 1.37 0 0 0 1.269.841c.37.002.726-.147.985-.41.221.121.688.341 1.163.341.06 0 .118-.002.175-.01.47-.059.689-.24.789-.382a.571.57 0 0 0 .048-.078c.11.032.234.058.373.058.255 0 .501-.086.75-.265.244-.174.418-.424.444-.637v-.01c.083.017.167.026.251.026.265 0 .527-.082.773-.242.48-.31.562-.715.554-.98a1.28 1.279 0 0 0 .978-.194 1.04 1.04 0 0 0 .502-.808 1.088 1.085 0 0 0-.16-.653c.804-.342 2.636-1.003 4.795-1.483a4.734 4.721 0 0 0-.067-.492 27.742 27.667 0 0 0-5.049 1.62zm5.123-.763c0 4.027-5.166 7.293-11.537 7.293-6.372 0-11.538-3.266-11.538-7.293 0-4.028 5.165-7.293 11.539-7.293 6.371 0 11.537 3.265 11.537 7.293zm.46.004c0-4.272-5.374-7.755-12-7.755S.002 7.277.002 11.55L0 12.004c0 4.533 4.695 8.203 11.999 8.203 7.347 0 12-3.67 12-8.204z"/></svg>
-            </div>
-            <div class="payment-info">
-                <span class="payment-title">Mercado Pago</span>
-                <span class="payment-desc">Pay with Mercado Pago account</span>
-            </div>
-        </label>
-    </div>
+                                    <!-- Mercado Pago -->
+                                    <!-- <div class="payment-option mb-3">
+                                        <input id="mercadopago-payment" name="payment-method" type="radio" value="mercadopago">
+                                        <label for="mercadopago-payment" class="payment-label">
+                                            <div class="payment-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" fill="currentColor"><title>Mercado Pago</title><path d="M11.115 16.479a.93.927 0 0 1-.939-.886c-.002-.042-.006-.155-.103-.155-.04 0-.074.023-.113.059-.112.103-.254.206-.46.206a.816.814 0 0 1-.305-.066c-.535-.214-.542-.578-.521-.725.006-.038.007-.08-.02-.11l-.032-.03h-.034c-.027 0-.055.012-.093.039a.788.786 0 0 1-.454.16.7.699 0 0 1-.253-.05c-.708-.27-.65-.928-.617-1.126.005-.041-.005-.072-.03-.092l-.05-.04-.047.043a.728.726 0 0 1-.505.203.73.728 0 0 1-.732-.725c0-.4.328-.722.732-.722.364 0 .675.27.721.63l.026.195.11-.165c.01-.018.307-.46.852-.46.102 0 .21.016.316.05.434.13.508.52.519.68.008.094.075.1.09.1.037 0 .064-.024.083-.045a.746.744 0 0 1 .54-.225c.128 0 .263.03.402.09.69.293.379 1.158.374 1.167-.058.144-.061.207-.005.244l.027.013h.02c.03 0 .07-.014.134-.035.093-.032.235-.08.367-.08a.944.942 0 0 1 .94.93.936.934 0 0 1-.94.928zm7.302-4.171c-1.138-.98-3.768-3.24-4.481-3.77-.406-.302-.685-.462-.928-.533a1.559 1.554 0 0 0-.456-.07c-.182 0-.376.032-.58.095-.46.145-.918.505-1.362.854l-.023.018c-.414.324-.84.66-1.164.73a1.986 1.98 0 0 1-.43.049c-.362 0-.687-.104-.81-.258-.02-.025-.007-.066.04-.125l.008-.008 1-1.067c.783-.774 1.525-1.506 3.23-1.545h.085c1.062 0 2.12.469 2.24.524a7.03 7.03 0 0 0 3.056.724c1.076 0 2.188-.263 3.354-.795a9.135 9.11 0 0 0-.405-.317c-1.025.44-2.003.66-2.946.66-.962 0-1.925-.229-2.858-.68-.05-.022-1.22-.567-2.44-.57-.032 0-.065 0-.096.002-1.434.033-2.24.536-2.782.976-.528.013-.982.138-1.388.25-.361.1-.673.186-.979.185-.125 0-.35-.01-.37-.012-.35-.01-2.115-.437-3.518-.962-.143.1-.28.203-.415.31 1.466.593 3.25 1.053 3.812 1.089.157.01.323.027.491.027.372 0 .744-.103 1.104-.203.213-.059.446-.123.692-.17l-.196.194-1.017 1.087c-.08.08-.254.294-.14.557a.705.703 0 0 0 .268.292c.243.162.677.27 1.08.271.152 0 .297-.015.43-.044.427-.095.874-.448 1.349-.82.377-.296.913-.672 1.323-.782a1.494 1.49 0 0 1 .37-.05.611.61 0 0 1 .095.005c.27.034.533.125 1.003.472.835.62 4.531 3.815 4.566 3.846.002.002.238.203.22.537-.007.186-.11.352-.294.466a.902.9 0 0 1-.484.15.804.802 0 0 1-.428-.124c-.014-.01-1.28-1.157-1.746-1.543-.074-.06-.146-.115-.22-.115a.122.122 0 0 0-.096.045c-.073.09.01.212.105.294l1.48 1.47c.002 0 .184.17.204.395.012.244-.106.447-.35.606a.957.955 0 0 1-.526.171.766.764 0 0 1-.42-.127l-.214-.206a21.035 20.978 0 0 0-1.08-1.009c-.072-.058-.148-.112-.221-.112a.127.127 0 0 0-.094.038c-.033.037-.056.103.028.212a.698.696 0 0 0 .075.083l1.078 1.198c.01.01.222.26.024.511l-.038.048a1.18 1.178 0 0 1-.1.096c-.184.15-.43.164-.527.164a.8.798 0 0 1-.147-.012c-.106-.018-.178-.048-.212-.089l-.013-.013c-.06-.06-.602-.609-1.054-.98-.059-.05-.133-.11-.21-.11a.128.128 0 0 0-.096.042c-.09.096.044.24.1.293l.92 1.003a.204.204 0 0 1-.033.062c-.033.044-.144.155-.479.196a.91.907 0 0 1-.122.007c-.345 0-.712-.164-.902-.264a1.343 1.34 0 0 0 .13-.576 1.368 1.365 0 0 0-1.42-1.357c.024-.342-.025-.99-.697-1.274a1.455 1.452 0 0 0-.575-.125c-.146 0-.287.025-.42.075a1.153 1.15 0 0 0-.671-.564 1.52 1.515 0 0 0-.494-.085c-.28 0-.537.08-.767.242a1.168 1.165 0 0 0-.903-.43 1.173 1.17 0 0 0-.82.335c-.287-.217-1.425-.93-4.467-1.613a17.39 17.344 0 0 1-.692-.189 4.822 4.82 0 0 0-.077.494l.67.157c3.108.682 4.136 1.391 4.309 1.525a1.145 1.142 0 0 0-.09.442 1.16 1.158 0 0 0 1.378 1.132c.096.467.406.821.879 1.003a1.165 1.162 0 0 0 .415.08c.09 0 .179-.012.266-.034.086.22.282.493.722.668a1.233 1.23 0 0 0 .457.094c.122 0 .241-.022.355-.063a1.373 1.37 0 0 0 1.269.841c.37.002.726-.147.985-.41.221.121.688.341 1.163.341.06 0 .118-.002.175-.01.47-.059.689-.24.789-.382a.571.57 0 0 0 .048-.078c.11.032.234.058.373.058.255 0 .501-.086.75-.265.244-.174.418-.424.444-.637v-.01c.083.017.167.026.251.026.265 0 .527-.082.773-.242.48-.31.562-.715.554-.98a1.28 1.279 0 0 0 .978-.194 1.04 1.04 0 0 0 .502-.808 1.088 1.085 0 0 0-.16-.653c.804-.342 2.636-1.003 4.795-1.483a4.734 4.721 0 0 0-.067-.492 27.742 27.667 0 0 0-5.049 1.62zm5.123-.763c0 4.027-5.166 7.293-11.537 7.293-6.372 0-11.538-3.266-11.538-7.293 0-4.028 5.165-7.293 11.539-7.293 6.371 0 11.537 3.265 11.537 7.293zm.46.004c0-4.272-5.374-7.755-12-7.755S.002 7.277.002 11.55L0 12.004c0 4.533 4.695 8.203 11.999 8.203 7.347 0 12-3.67 12-8.204z"/></svg>
+                                            </div>
+                                            <div class="payment-info">
+                                                <span class="payment-title">Mercado Pago</span>
+                                                <span class="payment-desc">Pay with Mercado Pago account</span>
+                                            </div>
+                                        </label>
+                                    </div> -->
 
-    <!-- Oxxo Pay -->
-    <div class="payment-option">
-        <input id="oxxo-payment" name="payment-method" type="radio" value="oxxo">
-        <label for="oxxo-payment" class="payment-label">
-            <div class="payment-icon">
-                <svg xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" version="1.1" id="svg1" width="257.33334" height="257.33334" viewBox="0 0 257.33334 257.33334" sodipodi:docname="oxxo-seeklogo.eps">
-                    <defs id="defs1"/>
-                    <sodipodi:namedview id="namedview1" bordercolor="#000000" borderopacity="0.25" inkscape:showpageshadow="2" inkscape:pageopacity="0.0" inkscape:pagecheckerboard="0" inkscape:deskcolor="#d1d1d1">
-                        <inkscape:page x="0" y="0" inkscape:label="1" id="page1" width="257.33334" height="257.33334" margin="0" bleed="0"/>
-                    </sodipodi:namedview>
-                    <g id="g1" inkscape:groupmode="layer" inkscape:label="1">
-                        <path id="path2" d="m 85.0391,1314.06 c 0,30.1 24.6249,54.73 54.7269,54.73 H 1787.79 c 30.1,0 54.73,-24.63 54.73,-54.73 V 613.496 c 0,-30.101 -24.63,-54.726 -54.73,-54.726 H 139.766 c -30.102,0 -54.7269,24.625 -54.7269,54.726 v 700.564" style="fill:#6c757d;fill-opacity:1;fill-rule:evenodd;stroke:none" transform="matrix(0.13333333,0,0,-0.13333333,0,257.33333)"/>
-                        <path id="path3" d="M 85.0391,1289.26 H 1842.52 V 638.309 H 85.0391 v 650.951" style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none" transform="matrix(0.13333333,0,0,-0.13333333,0,257.33333)"/>
-                        <path id="path4" d="m 1574.46,1120.2 c -80.41,0 -145.96,-65.56 -145.96,-145.966 0,-80.379 65.55,-145.945 145.96,-145.945 80.39,0 145.94,65.566 145.94,145.945 0,80.406 -65.55,145.966 -145.94,145.966" style="fill:#6c757d;fill-opacity:1;fill-rule:evenodd;stroke:none" transform="matrix(0.13333333,0,0,-0.13333333,0,257.33333)"/>
-                        <path id="path5" d="m 371.441,1120.2 c -80.418,0 -145.972,-65.56 -145.972,-145.966 0,-80.379 65.554,-145.945 145.972,-145.945 80.379,0 145.934,65.566 145.934,145.945 0,80.406 -65.555,145.966 -145.934,145.966" style="fill:#6c757d;fill-opacity:1;fill-rule:evenodd;stroke:none" transform="matrix(0.13333333,0,0,-0.13333333,0,257.33333)"/>
-                        <path id="path6" d="m 1563,1248.65 c -135.11,3.11 -198.63,-83.53 -290.82,-190.39 l -86.97,-100.787 137.71,-164.868 c 32.81,-50.652 -29.81,-100.925 -68.66,-54.574 L 1126.94,889.914 1002.87,746.086 c -39.515,-45.785 -101.421,5.363 -67.909,55.543 l 134.689,156.625 -88.24,105.266 56.76,70.3 89.74,-107.8 77.36,89.98 c 37.96,44.12 76.66,102.59 126.84,132.65 H 85.0391 V 678.902 H 376.609 c 135.129,0 196.473,80.793 286.164,189.743 l 84.633,102.796 -141.508,161.629 c -33.937,49.88 27.493,101.57 67.407,56.13 l 130.777,-148.91 120.754,146.66 c 38.437,46.71 101.494,-3.02 69.156,-53.97 L 862.945,973.273 953.598,870.07 896.48,802.43 806.25,904.199 731,812.477 C 694.063,767.492 656.676,710.117 607.199,678.902 H 1842.52 V 1248.65 Z M 602.012,974.234 c 0,-127.015 -103.567,-230.593 -230.571,-230.593 -127.043,0 -230.609,103.578 -230.609,230.593 0,127.036 103.566,230.606 230.609,230.606 127.004,0 230.571,-103.57 230.571,-230.606 z M 1574.46,743.641 c -127.02,0 -230.61,103.578 -230.61,230.593 0,127.036 103.59,230.606 230.61,230.606 127.02,0 230.58,-103.57 230.58,-230.606 0,-127.015 -103.56,-230.593 -230.58,-230.593" style="fill:#6c757d;fill-opacity:1;fill-rule:evenodd;stroke:none" transform="matrix(0.13333333,0,0,-0.13333333,0,257.33333)"/>
-                    </g>
-                </svg>
-            </div>
-            <div class="payment-info">
-                <span class="payment-title">Oxxo Pay</span>
-                <span class="payment-desc">Pay cash at any Oxxo store</span>
-            </div>
-        </label>
-    </div>
-</div>
+                                    <!-- Oxxo Pay -->
+                                    <!-- <div class="payment-option">
+                                        <input id="oxxo-payment" name="payment-method" type="radio" value="oxxo">
+                                        <label for="oxxo-payment" class="payment-label">
+                                            <div class="payment-icon">
+                                                <svg xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" version="1.1" id="svg1" width="257.33334" height="257.33334" viewBox="0 0 257.33334 257.33334" sodipodi:docname="oxxo-seeklogo.eps">
+                                                    <defs id="defs1"/>
+                                                    <sodipodi:namedview id="namedview1" bordercolor="#000000" borderopacity="0.25" inkscape:showpageshadow="2" inkscape:pageopacity="0.0" inkscape:pagecheckerboard="0" inkscape:deskcolor="#d1d1d1">
+                                                        <inkscape:page x="0" y="0" inkscape:label="1" id="page1" width="257.33334" height="257.33334" margin="0" bleed="0"/>
+                                                    </sodipodi:namedview>
+                                                    <g id="g1" inkscape:groupmode="layer" inkscape:label="1">
+                                                        <path id="path2" d="m 85.0391,1314.06 c 0,30.1 24.6249,54.73 54.7269,54.73 H 1787.79 c 30.1,0 54.73,-24.63 54.73,-54.73 V 613.496 c 0,-30.101 -24.63,-54.726 -54.73,-54.726 H 139.766 c -30.102,0 -54.7269,24.625 -54.7269,54.726 v 700.564" style="fill:#6c757d;fill-opacity:1;fill-rule:evenodd;stroke:none" transform="matrix(0.13333333,0,0,-0.13333333,0,257.33333)"/>
+                                                        <path id="path3" d="M 85.0391,1289.26 H 1842.52 V 638.309 H 85.0391 v 650.951" style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none" transform="matrix(0.13333333,0,0,-0.13333333,0,257.33333)"/>
+                                                        <path id="path4" d="m 1574.46,1120.2 c -80.41,0 -145.96,-65.56 -145.96,-145.966 0,-80.379 65.55,-145.945 145.96,-145.945 80.39,0 145.94,65.566 145.94,145.945 0,80.406 -65.55,145.966 -145.94,145.966" style="fill:#6c757d;fill-opacity:1;fill-rule:evenodd;stroke:none" transform="matrix(0.13333333,0,0,-0.13333333,0,257.33333)"/>
+                                                        <path id="path5" d="m 371.441,1120.2 c -80.418,0 -145.972,-65.56 -145.972,-145.966 0,-80.379 65.554,-145.945 145.972,-145.945 80.379,0 145.934,65.566 145.934,145.945 0,80.406 -65.555,145.966 -145.934,145.966" style="fill:#6c757d;fill-opacity:1;fill-rule:evenodd;stroke:none" transform="matrix(0.13333333,0,0,-0.13333333,0,257.33333)"/>
+                                                        <path id="path6" d="m 1563,1248.65 c -135.11,3.11 -198.63,-83.53 -290.82,-190.39 l -86.97,-100.787 137.71,-164.868 c 32.81,-50.652 -29.81,-100.925 -68.66,-54.574 L 1126.94,889.914 1002.87,746.086 c -39.515,-45.785 -101.421,5.363 -67.909,55.543 l 134.689,156.625 -88.24,105.266 56.76,70.3 89.74,-107.8 77.36,89.98 c 37.96,44.12 76.66,102.59 126.84,132.65 H 85.0391 V 678.902 H 376.609 c 135.129,0 196.473,80.793 286.164,189.743 l 84.633,102.796 -141.508,161.629 c -33.937,49.88 27.493,101.57 67.407,56.13 l 130.777,-148.91 120.754,146.66 c 38.437,46.71 101.494,-3.02 69.156,-53.97 L 862.945,973.273 953.598,870.07 896.48,802.43 806.25,904.199 731,812.477 C 694.063,767.492 656.676,710.117 607.199,678.902 H 1842.52 V 1248.65 Z M 602.012,974.234 c 0,-127.015 -103.567,-230.593 -230.571,-230.593 -127.043,0 -230.609,103.578 -230.609,230.593 0,127.036 103.566,230.606 230.609,230.606 127.004,0 230.571,-103.57 230.571,-230.606 z M 1574.46,743.641 c -127.02,0 -230.61,103.578 -230.61,230.593 0,127.036 103.59,230.606 230.61,230.606 127.02,0 230.58,-103.57 230.58,-230.606 0,-127.015 -103.56,-230.593 -230.58,-230.593" style="fill:#6c757d;fill-opacity:1;fill-rule:evenodd;stroke:none" transform="matrix(0.13333333,0,0,-0.13333333,0,257.33333)"/>
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                            <div class="payment-info">
+                                                <span class="payment-title">Oxxo Pay</span>
+                                                <span class="payment-desc">Pay cash at any Oxxo store</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div> -->
 
-<!-- Formulario de Tarjeta -->
-<div id="card-form" class="card-form mt-4" style="display: none;">
-    <h6 class="mb-3">Card Details</h6>
-    
-    <div class="row g-3">
-        <div class="col-12">
-            <label class="form-label small">Card Number</label>
-            <input type="text" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19">
-        </div>
-        
-        <div class="col-6">
-            <label class="form-label small">Expiry Date</label>
-            <input type="text" class="form-control" placeholder="MM/YY" maxlength="5">
-        </div>
-        
-        <div class="col-6">
-            <label class="form-label small">CVV</label>
-            <input type="text" class="form-control" placeholder="123" maxlength="3">
-        </div>
-        
-        <div class="col-12">
-            <label class="form-label small">Cardholder Name</label>
-            <input type="text" class="form-control" placeholder="John Doe">
-        </div>
-    </div>
-</div>
+                                <!-- Formulario de Tarjeta -->
+                                <div id="card-form" class="card-form mt-4" style="display: none;">
+                                    <h6 class="mb-3">Card Details</h6>
+                                    
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label small">Card Number</label>
+                                            <input type="text" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19">
+                                        </div>
+                                        
+                                        <div class="col-6">
+                                            <label class="form-label small">Expiry Date</label>
+                                            <input type="text" class="form-control" placeholder="MM/YY" maxlength="5">
+                                        </div>
+                                        
+                                        <div class="col-6">
+                                            <label class="form-label small">CVV</label>
+                                            <input type="text" class="form-control" placeholder="123" maxlength="3">
+                                        </div>
+                                        
+                                        <div class="col-12">
+                                            <label class="form-label small">Cardholder Name</label>
+                                            <input type="text" class="form-control" placeholder="John Doe">
+                                        </div>
+                                    </div>
+                                </div>
 
-<!-- Botón de PayPal -->
-<div id="paypal-button-container" class="mt-4 mb-3" style="display: none; max-height: 55px;"></div>
+                                <div id="card-payment-button" class="mt-3" style="display: none;">
+                                    <button class="optech-default-btn w-100" id="process-card-payment" data-text="Proceed with Card Payment">
+                                        <span class="btn-wraper">Proceed with Card Payment</span>
+                                    </button>
+                                </div>
 
-<!-- Botón de Mercado Pago -->
-<div id="mercadopago-button-container" class="mt-4 mb-3" style="display: none;">
-    <div id="wallet_container"></div>
-</div>
 
-<!-- Información de Oxxo Pay -->
-<div id="oxxo-info" class="oxxo-info mt-4" style="display: none;">
-    <div class="alert alert-info">
-        <h6 class="alert-heading">Oxxo Pay Instructions</h6>
-        <p class="mb-2 small">After placing your order, you will receive a payment reference number via email.</p>
-        <ul class="small mb-2">
-            <li>Take the reference number to any Oxxo store</li>
-            <li>Provide the reference to the cashier</li>
-            <li>Pay the exact amount in cash</li>
-            <li>Keep your receipt as proof of payment</li>
-        </ul>
-        <p class="mb-0 small"><strong>Payment must be made within 24 hours</strong></p>
-    </div>
-</div>
+                                <!-- Botón de PayPal -->
+                                <div id="paypal-button-container" class="mt-4 mb-3" style="display: none; max-height: 55px;"></div>
+
+                                <!-- Botón de Mercado Pago -->
+                                <!-- <div id="mercadopago-button-container" class="mt-4 mb-3" style="display: none;">
+                                    <div id="wallet_container"></div>
+                                </div> -->
+
+                                <!-- Información de Oxxo Pay -->
+                                <!-- <div id="oxxo-info" class="oxxo-info mt-4" style="display: none;">
+                                    <div class="alert alert-info">
+                                        <h6 class="alert-heading">Oxxo Pay Instructions</h6>
+                                        <p class="mb-2 small">After placing your order, you will receive a payment reference number via email.</p>
+                                        <ul class="small mb-2">
+                                            <li>Take the reference number to any Oxxo store</li>
+                                            <li>Provide the reference to the cashier</li>
+                                            <li>Pay the exact amount in cash</li>
+                                            <li>Keep your receipt as proof of payment</li>
+                                        </ul>
+                                        <p class="mb-0 small"><strong>Payment must be made within 24 hours</strong></p>
+                                    </div>
+                                </div> -->
                                 <span class="mt-4">All payments are secure and encrypted.</span>
                                 <p class="privacy-policy">
                                     Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a href="./terms-and-privacy.html">privacy policy</a>.
                                 </p>
                             </div>
-                            <a class="optech-default-btn shop-order-btn" href="#" data-text="Place Order"><span class="btn-wraper">Place Order</span></a>
                         </div>
                     </div>
                 </div>
@@ -373,7 +380,7 @@
         </div>
         <!-- End section -->
         <!-- Footer  -->
-        <footer class="optech-footer-section dark-bg">
+        <footer class="optech-footer-section checkout-footer dark-bg">
             <div class="container">
                 <div class="optech-footer-top optech-section-padding">
                     <div class="row">
@@ -460,8 +467,29 @@
             </div>
         </div>
     </footer>
-
-    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <!-- scripts -->
+        <script src="assets/js/jquery-3.7.1.min.js"></script>
+        <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/menu/menu.js"></script>
+        <script src="assets/js/jquery.magnific-popup.min.js"></script>
+        <script src="assets/js/slick.js"></script>
+        <script src="assets/js/countdown.js"></script>
+        <script src="assets/js/skillbar.js"></script>
+        <script src="assets/js/slick-animation.js"></script>
+        <script src="assets/js/slick-animation.min.js"></script>
+        <script src="assets/js/faq.js"></script>
+        <script src="assets/js/isotope.pkgd.min.js"></script>
+        <script src="assets/js/tabs-slider.js"></script>
+        <script src="assets/js/product-increment.js"></script>
+        <script src="assets/js/top-to-bottom.js"></script>
+        <script src="assets/js/aos.js"></script>
+        <script src="https://www.paypal.com/sdk/js?client-id=AfakkHFq6TNiB8DjicBPqaBt6dTtPZQssNpcp3-UxbWl6XuFkeYpoxCPJLmrwxS_Ip-Vd1Ln15uhW2IF&buyer-country=MX&currency=USD&components=buttons&disable-funding=venmo,paylater,card"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3&amp;key=AIzaSyArZVfNvjnLNwJZlLJKuOiWHZ6vtQzzb1Y"></script>
+        <script src="assets/js/app.js"></script>
+        <script src="assets/js/cart.js"></script>
+        <script src="assets/js/checkout.js"></script>
+    </body>
+     <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -515,37 +543,4 @@
         </div>
     </div>
 </div>
-        <!-- Toast Notification -->
-        <div id="success-toast" class="optech-toast" style="display: none;">
-            <div class="optech-toast-content">
-                <div class="toast-message">
-                    <object data="assets/images/iconbox/mail-check.svg" type="image/svg+xml" class="message-icon success-icon"></object>
-                    <object data="assets/images/iconbox/mail-close.svg" type="image/svg+xml" class="message-icon error-icon" style="display: none;"></object>
-                    <span class="message-text">Message sent successfully!</span>
-                </div>
-            </div>
-        </div>
-        <!-- scripts -->
-        <script src="assets/js/jquery-3.7.1.min.js"></script>
-        <script src="assets/js/bootstrap.bundle.min.js"></script>
-        <script src="assets/js/menu/menu.js"></script>
-        <script src="assets/js/jquery.magnific-popup.min.js"></script>
-        <script src="assets/js/slick.js"></script>
-        <script src="assets/js/countdown.js"></script>
-        <script src="assets/js/skillbar.js"></script>
-        <script src="assets/js/slick-animation.js"></script>
-        <script src="assets/js/slick-animation.min.js"></script>
-        <script src="assets/js/faq.js"></script>
-        <script src="assets/js/isotope.pkgd.min.js"></script>
-        <script src="assets/js/tabs-slider.js"></script>
-        <script src="assets/js/product-increment.js"></script>
-        <script src="assets/js/top-to-bottom.js"></script>
-        <script src="assets/js/aos.js"></script>
-        <script src="https://www.paypal.com/sdk/js?client-id=test&buyer-country=MX&currency=MXN&components=buttons&disable-funding=venmo,paylater,card"></script>
-        <script src="https://sdk.mercadopago.com/js/v2"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?v=3&amp;key=AIzaSyArZVfNvjnLNwJZlLJKuOiWHZ6vtQzzb1Y"></script>
-        <script src="assets/js/app.js"></script>
-        <script src="assets/js/cart.js"></script>
-        <script src="assets/js/checkout.js"></script>
-    </body>
 </html>

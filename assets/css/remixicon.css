@@ -82,3 +82,7 @@
 .ri-arrow-up-s-fill:before { content: "\ea77"; }
 .ri-arrow-left-s-fill:before { content: "\ea63"; }
 .ri-shopping-cart-fill:before { content: "\f291"; }
+.ri-checkbox-circle-fill:before { content: "\eb80"; }
+.ri-error-warning-fill:before { content: "\eca0"; }
+.ri-alert-fill:before { content: "\ea20"; }
+.ri-information-fill:before { content: "\ee58"; }
