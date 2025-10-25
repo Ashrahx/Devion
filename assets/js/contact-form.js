@@ -1,5 +1,7 @@
-document.getElementById("contact-form").addEventListener("submit", function(e) {
-    e.preventDefault();
+const contactForm = document.getElementById("contact-form");
+if (contactForm) {
+    contactForm.addEventListener("submit", function(e) {
+        e.preventDefault();
     
     var form = this;
     
@@ -77,4 +79,5 @@ document.getElementById("contact-form").addEventListener("submit", function(e) {
             }, 300);
         }, 3000);
     });
-});
+    });
+}
