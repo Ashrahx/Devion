@@ -16,6 +16,7 @@ class Checkout {
     this.renderOrderSummary();
     this.setupEventListeners();
     this.loadPayPalSDK();
+    this.setupCountryStates();
     this.setupZipCodeAutocomplete();
     this.initializePayPal();
     // this.initializeMercadoPago();
@@ -309,6 +310,168 @@ class Checkout {
     this.enableLocationFields();
   }
 
+  setupCountryStates() {
+    const countrySelect = document.getElementById('country');
+    const stateSelect = document.getElementById('state');
+    
+    if (!countrySelect || !stateSelect) return;
+
+    // Mapeo de países y sus estados
+    const countryStates = {
+        'MX': [
+            { code: 'AGS', name: 'Aguascalientes' },
+            { code: 'BC', name: 'Baja California' },
+            { code: 'BCS', name: 'Baja California Sur' },
+            { code: 'CAMP', name: 'Campeche' },
+            { code: 'CHIS', name: 'Chiapas' },
+            { code: 'CHIH', name: 'Chihuahua' },
+            { code: 'CDMX', name: 'Ciudad de México' },
+            { code: 'COAH', name: 'Coahuila' },
+            { code: 'COL', name: 'Colima' },
+            { code: 'DGO', name: 'Durango' },
+            { code: 'GTO', name: 'Guanajuato' },
+            { code: 'GRO', name: 'Guerrero' },
+            { code: 'HGO', name: 'Hidalgo' },
+            { code: 'JAL', name: 'Jalisco' },
+            { code: 'MEX', name: 'Estado de México' },
+            { code: 'MICH', name: 'Michoacán' },
+            { code: 'MOR', name: 'Morelos' },
+            { code: 'NAY', name: 'Nayarit' },
+            { code: 'NL', name: 'Nuevo León' },
+            { code: 'OAX', name: 'Oaxaca' },
+            { code: 'PUE', name: 'Puebla' },
+            { code: 'QRO', name: 'Querétaro' },
+            { code: 'QROO', name: 'Quintana Roo' },
+            { code: 'SLP', name: 'San Luis Potosí' },
+            { code: 'SIN', name: 'Sinaloa' },
+            { code: 'SON', name: 'Sonora' },
+            { code: 'TAB', name: 'Tabasco' },
+            { code: 'TAMS', name: 'Tamaulipas' },
+            { code: 'TLAX', name: 'Tlaxcala' },
+            { code: 'VER', name: 'Veracruz' },
+            { code: 'YUC', name: 'Yucatán' },
+            { code: 'ZAC', name: 'Zacatecas' }
+        ],
+        'US': [
+            { code: 'AL', name: 'Alabama' },
+            { code: 'AK', name: 'Alaska' },
+            { code: 'AZ', name: 'Arizona' },
+            { code: 'AR', name: 'Arkansas' },
+            { code: 'CA', name: 'California' },
+            { code: 'CO', name: 'Colorado' },
+            { code: 'CT', name: 'Connecticut' },
+            { code: 'DE', name: 'Delaware' },
+            { code: 'FL', name: 'Florida' },
+            { code: 'GA', name: 'Georgia' },
+            { code: 'HI', name: 'Hawaii' },
+            { code: 'ID', name: 'Idaho' },
+            { code: 'IL', name: 'Illinois' },
+            { code: 'IN', name: 'Indiana' },
+            { code: 'IA', name: 'Iowa' },
+            { code: 'KS', name: 'Kansas' },
+            { code: 'KY', name: 'Kentucky' },
+            { code: 'LA', name: 'Louisiana' },
+            { code: 'ME', name: 'Maine' },
+            { code: 'MD', name: 'Maryland' },
+            { code: 'MA', name: 'Massachusetts' },
+            { code: 'MI', name: 'Michigan' },
+            { code: 'MN', name: 'Minnesota' },
+            { code: 'MS', name: 'Mississippi' },
+            { code: 'MO', name: 'Missouri' },
+            { code: 'MT', name: 'Montana' },
+            { code: 'NE', name: 'Nebraska' },
+            { code: 'NV', name: 'Nevada' },
+            { code: 'NH', name: 'New Hampshire' },
+            { code: 'NJ', name: 'New Jersey' },
+            { code: 'NM', name: 'New Mexico' },
+            { code: 'NY', name: 'New York' },
+            { code: 'NC', name: 'North Carolina' },
+            { code: 'ND', name: 'North Dakota' },
+            { code: 'OH', name: 'Ohio' },
+            { code: 'OK', name: 'Oklahoma' },
+            { code: 'OR', name: 'Oregon' },
+            { code: 'PA', name: 'Pennsylvania' },
+            { code: 'RI', name: 'Rhode Island' },
+            { code: 'SC', name: 'South Carolina' },
+            { code: 'SD', name: 'South Dakota' },
+            { code: 'TN', name: 'Tennessee' },
+            { code: 'TX', name: 'Texas' },
+            { code: 'UT', name: 'Utah' },
+            { code: 'VT', name: 'Vermont' },
+            { code: 'VA', name: 'Virginia' },
+            { code: 'WA', name: 'Washington' },
+            { code: 'WV', name: 'West Virginia' },
+            { code: 'WI', name: 'Wisconsin' },
+            { code: 'WY', name: 'Wyoming' }
+        ],
+        'CA': [
+            { code: 'AB', name: 'Alberta' },
+            { code: 'BC', name: 'British Columbia' },
+            { code: 'MB', name: 'Manitoba' },
+            { code: 'NB', name: 'New Brunswick' },
+            { code: 'NL', name: 'Newfoundland and Labrador' },
+            { code: 'NS', name: 'Nova Scotia' },
+            { code: 'ON', name: 'Ontario' },
+            { code: 'PE', name: 'Prince Edward Island' },
+            { code: 'QC', name: 'Quebec' },
+            { code: 'SK', name: 'Saskatchewan' },
+            { code: 'NT', name: 'Northwest Territories' },
+            { code: 'NU', name: 'Nunavut' },
+            { code: 'YT', name: 'Yukon' }
+        ],
+        'CL': [
+            { code: 'AN', name: 'Antofagasta' },
+            { code: 'AR', name: 'Arica y Parinacota' },
+            { code: 'AT', name: 'Atacama' },
+            { code: 'AI', name: 'Aisén del General Carlos Ibáñez del Campo' },
+            { code: 'BI', name: 'Biobío' },
+            { code: 'CO', name: 'Coquimbo' },
+            { code: 'LI', name: 'Libertador General Bernardo O\'Higgins' },
+            { code: 'LL', name: 'Los Lagos' },
+            { code: 'LR', name: 'Los Ríos' },
+            { code: 'MA', name: 'Magallanes y de la Antártica Chilena' },
+            { code: 'ML', name: 'Maule' },
+            { code: 'NB', name: 'Ñuble' },
+            { code: 'RM', name: 'Región Metropolitana de Santiago' },
+            { code: 'TA', name: 'Tarapacá' },
+            { code: 'VA', name: 'Valparaíso' }
+        ]
+    };
+
+    countrySelect.addEventListener('change', (e) => {
+        const countryCode = e.target.value;
+        this.updateStatesDropdown(countryCode, countryStates, stateSelect);
+        
+        // Limpiar campos de ubicación cuando cambia el país
+        this.clearLocationFields();
+    });
+
+    // Inicializar estados con el país seleccionado por defecto
+    const defaultCountry = countrySelect.value;
+    this.updateStatesDropdown(defaultCountry, countryStates, stateSelect);
+}
+
+updateStatesDropdown(countryCode, countryStates, stateSelect) {
+    // Limpiar dropdown actual
+    stateSelect.innerHTML = '<option value="">Select a state...</option>';
+    
+    if (countryCode && countryStates[countryCode]) {
+        // Habilitar dropdown
+        stateSelect.disabled = false;
+        
+        // Agregar estados del país
+        countryStates[countryCode].forEach(state => {
+            const option = document.createElement('option');
+            option.value = state.code;
+            option.textContent = state.name;
+            stateSelect.appendChild(option);
+        });
+    } else {
+        // Deshabilitar si no hay estados para ese país
+        stateSelect.disabled = true;
+    }
+}
+
   enableLocationFields() {
     const cityInput = document.getElementById("city");
     const stateSelect = document.getElementById("state");
@@ -319,7 +482,7 @@ class Checkout {
 
   clearLocationFields() {
     const cityInput = document.getElementById("city");
-    const stateSelect = document.getElementById("state");
+    const zipcodeInput = document.getElementById('zipcode');
 
     if (cityInput) {
       cityInput.value = "";
@@ -328,7 +491,6 @@ class Checkout {
 
     if (stateSelect) {
       stateSelect.value = "";
-      stateSelect.disabled = false;
     }
   }
 
