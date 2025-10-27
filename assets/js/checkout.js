@@ -4,6 +4,9 @@ class Checkout {
     this.setupToast();
     this.checkoutData = this.loadCheckoutData();
     this.paypalLoaded = false;
+    this.paypalInitializing = false;
+    this.paypalInitialized = false;
+    this.mercadoPagoInitialized = false;
     this.init();
   }
 
@@ -16,10 +19,9 @@ class Checkout {
     this.renderOrderSummary();
     this.setupEventListeners();
     this.loadPayPalSDK();
+    this.loadMercadoPagoSDK();
     this.setupCountryStates();
     this.setupZipCodeAutocomplete();
-    this.initializePayPal();
-    // this.initializeMercadoPago();
   }
 
   setupToast() {
@@ -258,10 +260,7 @@ class Checkout {
       this.populateLocationFields(data);
     } catch (error) {
       console.log("Zip code not found or error:", error);
-      this.showToast(
-        "Zip code not found. Please enter city and state manually.",
-        "warning"
-      );
+      // No mostrar toast para errores de zipcode
       this.enableLocationFields();
     } finally {
       if (loadingElement) loadingElement.style.display = "none";
@@ -599,7 +598,7 @@ updateStatesDropdown(countryCode, countryStates, stateSelect) {
     );
     const cardForm = document.getElementById("card-form");
     const paypalButton = document.getElementById("paypal-button-container");
-    // const mercadopagoButton = document.getElementById('mercadopago-button-container');
+    const mercadopagoButton = document.getElementById("mercadopago-button-container");
     const cardPaymentButton = document.getElementById("card-payment-button");
 
     paymentMethods.forEach((method) => {
@@ -625,33 +624,33 @@ updateStatesDropdown(countryCode, countryStates, stateSelect) {
       });
     }
 
-    // const mercadopagoBtn = document.querySelector('.mercadopago-btn');
-    // if (mercadopagoBtn) {
-    //     mercadopagoBtn.addEventListener('click', (e) => {
-    //         e.preventDefault();
-    //         this.handleMercadoPagoPayment();
-    //     });
-    // }
-
     this.setupCardInputFormatting();
   }
 
   initializePayPal() {
+    // Prevenir múltiples inicializaciones
+    if (this.paypalInitializing || this.paypalInitialized) {
+      return;
+    }
+
     if (typeof paypal === "undefined") {
       console.log("PayPal SDK not loaded, retrying...");
       setTimeout(() => this.initializePayPal(), 1000);
       return;
     }
 
-    console.log("Initializing PayPal buttons...");
-
     const container = document.getElementById("paypal-button-container");
-    if (container) {
-      container.innerHTML = "";
-    } else {
+    if (!container) {
       console.error("PayPal container not found");
       return;
     }
+
+    // Limpiar contenedor solo si no hay botones ya renderizados
+    if (!container.querySelector('.paypal-buttons')) {
+      container.innerHTML = "";
+    }
+
+    this.paypalInitializing = true;
 
     try {
       paypal
@@ -702,14 +701,10 @@ updateStatesDropdown(countryCode, countryStates, stateSelect) {
           },
           onError: (err) => {
             console.error("PayPal Error:", err);
-            if (err.message.includes("blocked")) {
+            // No mostrar toast para errores internos de PayPal
+            if (err.message && err.message.includes("blocked")) {
               this.showToast(
                 "Please disable your ad blocker to use PayPal.",
-                "error"
-              );
-            } else {
-              this.showToast(
-                "There was an error with PayPal. Please try again.",
                 "error"
               );
             }
@@ -723,21 +718,94 @@ updateStatesDropdown(countryCode, countryStates, stateSelect) {
           },
         })
         .render("#paypal-button-container")
+        .then(() => {
+          this.paypalInitializing = false;
+          this.paypalInitialized = true;
+          console.log("PayPal buttons rendered successfully");
+        })
         .catch((error) => {
+          this.paypalInitializing = false;
           console.error("Error rendering PayPal buttons:", error);
-          this.handlePayPalError(error);
+          // No mostrar toast para errores de renderizado
         });
     } catch (error) {
+      this.paypalInitializing = false;
       console.error("Exception in PayPal initialization:", error);
-      this.handlePayPalError(error);
+      // No mostrar toast para excepciones
     }
   }
 
-  retryPayPalRender() {
-    const container = document.getElementById("paypal-button-container");
-    if (container) {
-      container.innerHTML = "";
-      this.initializePayPal();
+  initializeMercadoPago() {
+    if (this.mercadoPagoInitialized) {
+      return;
+    }
+
+    if (typeof MercadoPago === "undefined") {
+      console.log("MercadoPago SDK not loaded, retrying...");
+      setTimeout(() => this.initializeMercadoPago(), 1000);
+      return;
+    }
+
+    const container = document.getElementById("mercadopago-button-container");
+    if (!container) {
+      console.error("MercadoPago container not found");
+      return;
+    }
+
+    // Limpiar contenedor
+    container.innerHTML = "";
+
+    try {
+      // Inicializar Mercado Pago con clave pública de sandbox
+      const mp = new MercadoPago("TEST-64d68a5d-0e4e-41b9-875d-9c4098e8660f", {
+        locale: "es-MX",
+      });
+
+      // Crear los datos de la preferencia
+      const preferenceData = {
+        items: this.checkoutData.cart.map(item => ({
+          id: item.id || Math.random().toString(36).substr(2, 9),
+          title: item.name,
+          description: item.description || `Product: ${item.name}`,
+          quantity: item.quantity,
+          unit_price: parseFloat(item.price),
+          currency_id: "USD",
+        })),
+        payer: {
+          name: document.getElementById("firstname")?.value || "Test",
+          surname: document.getElementById("lastname")?.value || "User",
+          email: document.getElementById("email")?.value || "test@user.com",
+        },
+        back_urls: {
+          success: window.location.origin + "/pago-exitoso.html",
+          failure: window.location.origin + "/pago-fallido.html",
+          pending: window.location.origin + "/pago-pendiente.html",
+        },
+        auto_return: "approved",
+        notification_url: window.location.origin + "/webhook-mercadopago.html",
+        statement_descriptor: "DEVION STORE",
+        external_reference: "devion_" + Date.now(),
+      };
+
+      // Crear preferencia
+      mp.checkout({
+        preference: preferenceData,
+        render: {
+          container: "#mercadopago-button-container",
+          label: "Pagar con Mercado Pago",
+          type: "wallet", // Usar wallet para mejor experiencia
+        },
+      });
+
+      this.mercadoPagoInitialized = true;
+      console.log("MercadoPago initialized successfully");
+
+    } catch (error) {
+      console.error("Error initializing MercadoPago:", error);
+      this.showToast(
+        "Error initializing Mercado Pago. Please try again.",
+        "error"
+      );
     }
   }
 
@@ -763,12 +831,17 @@ updateStatesDropdown(countryCode, countryStates, stateSelect) {
   }
 
   loadPayPalSDK() {
+    // Verificar si el SDK ya está cargado
+    if (document.querySelector('script[src*="paypal.com/sdk/js"]')) {
+      return;
+    }
+
     const script = document.createElement("script");
     script.src =
       "https://www.paypal.com/sdk/js?client-id=AS1Z8oiTYrJz4otR9AKuh44YsHW99lIVCPOrwVlEnUK48o6MAmgIQLixgcteIZY5YS0M5F7RuRg6LCOW&currency=USD&intent=capture&components=buttons&disable-funding=venmo,paylater,card";
     script.onload = () => {
       console.log("PayPal SDK loaded");
-      this.initializePayPal();
+      // No inicializar automáticamente, esperar a que se seleccione el método
     };
     script.onerror = () => {
       console.error("Failed to load PayPal SDK");
@@ -776,12 +849,28 @@ updateStatesDropdown(countryCode, countryStates, stateSelect) {
     document.head.appendChild(script);
   }
 
+  loadMercadoPagoSDK() {
+    // Verificar si el SDK ya está cargado
+    if (document.querySelector('script[src*="mercadolibre.com/mptools"]')) {
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = "https://sdk.mercadopago.com/js/v2";
+    script.onload = () => {
+      console.log("MercadoPago SDK loaded");
+      // No inicializar automáticamente, esperar a que se seleccione el método
+    };
+    script.onerror = () => {
+      console.error("Failed to load MercadoPago SDK");
+    };
+    document.head.appendChild(script);
+  }
+
   handlePaymentMethodChange(method) {
     const cardForm = document.getElementById("card-form");
     const paypalButton = document.getElementById("paypal-button-container");
-    const mercadopagoButton = document.getElementById(
-      "mercadopago-button-container"
-    );
+    const mercadopagoButton = document.getElementById("mercadopago-button-container");
     const oxxoInfo = document.getElementById("oxxo-info");
     const cardPaymentButton = document.getElementById("card-payment-button");
 
@@ -813,109 +902,30 @@ updateStatesDropdown(countryCode, countryStates, stateSelect) {
       case "paypal":
         if (paypalButton) {
           paypalButton.style.display = "block";
-          if (typeof paypal === "undefined" || !paypalButton.children.length) {
-            this.initializePayPal();
+          // Inicializar PayPal solo cuando se selecciona el método
+          if (typeof paypal !== "undefined") {
+            setTimeout(() => this.initializePayPal(), 100);
           }
         }
         break;
-      // case 'mercadopago':
-      //     if (mercadopagoButton) {
-      //         mercadopagoButton.style.display = 'block';
-      //         this.initializeMercadoPago();
-      //     }
-      //     break;
+      case "mercadopago":
+        if (mercadopagoButton) {
+          mercadopagoButton.style.display = "block";
+          // Inicializar Mercado Pago solo cuando se selecciona el método
+          if (typeof MercadoPago !== "undefined") {
+            setTimeout(() => this.initializeMercadoPago(), 100);
+          } else {
+            this.loadMercadoPagoSDK();
+            setTimeout(() => this.initializeMercadoPago(), 1000);
+          }
+        }
+        break;
       case 'oxxo':
           if (oxxoInfo) {
               oxxoInfo.style.display = 'block';
           }
           break;
     }
-  }
-
-  // initializeMercadoPago() {
-  //     if (typeof MercadoPago === 'undefined') {
-  //         console.log('MercadoPago SDK not loaded, retrying...');
-  //         setTimeout(() => this.initializeMercadoPago(), 1000);
-  //         return;
-  //     }
-
-  //     try {
-  //         const mp = new MercadoPago('TEST-b2c7f068-6614-4f9b-be30-7cc82aecaa6e');
-
-  //         const preferenceId = 'TEST-12345678-1234-1234-1234-123456789012';
-
-  //         const bricksBuilder = mp.bricks();
-  //         bricksBuilder.create("wallet", "wallet_container", {
-  //             initialization: {
-  //                 preferenceId: preferenceId,
-  //                 redirectMode: "modal"
-  //             },
-  //             callbacks: {
-  //                 onReady: () => {
-  //                     console.log('Brick ready');
-  //                 },
-  //                 onSubmit: () => {
-  //                     console.log('Payment submitted');
-  //                 },
-  //                 onError: (error) => {
-  //                     console.error('Brick error:', error);
-  //                     this.showToast('Error with Mercado Pago payment. Please try again.', 'error');
-  //                 }
-  //             },
-  //             customization: {
-  //                 visual: {
-  //                     buttonBackground: 'default',
-  //                     borderRadius: '6px'
-  //                 }
-  //             }
-  //         });
-  //     } catch (error) {
-  //         console.error('Error initializing MercadoPago:', error);
-  //         this.showToast('Error initializing Mercado Pago. Please try again.', 'error');
-  //     }
-  // }
-
-  // handleMercadoPagoPayment() {
-  //     if (!this.validateCheckoutForm()) {
-  //         this.showToast('Please fill in all required fields before proceeding with Mercado Pago.', 'warning');
-  //         return;
-  //     }
-
-  //     try {
-  //         const container = document.getElementById('wallet_container');
-  //         if (container) {
-  //             container.innerHTML = '';
-  //             this.initializeMercadoPago();
-  //         } else {
-  //             throw new Error('Mercado Pago container not found');
-  //         }
-  //     } catch (error) {
-  //         console.error('Error with Mercado Pago payment:', error);
-  //         this.showToast('There was an error initializing Mercado Pago. Please try again.', 'error');
-  //     }
-  // }
-
-  handlePayPalPayment() {
-    if (!this.validateCheckoutForm()) {
-      this.showToast(
-        "Please fill in all required fields before proceeding with PayPal.",
-        "warning"
-      );
-      return;
-    }
-
-    const placeOrderBtn = document.querySelector(".shop-order-btn");
-    const originalText = placeOrderBtn.querySelector(".btn-wraper").textContent;
-    placeOrderBtn.querySelector(".btn-wraper").textContent =
-      "Redirecting to PayPal...";
-    placeOrderBtn.disabled = true;
-
-    setTimeout(() => {
-      this.showToast("Redirecting to PayPal for payment processing...", "info");
-
-      placeOrderBtn.querySelector(".btn-wraper").textContent = originalText;
-      placeOrderBtn.disabled = false;
-    }, 1500);
   }
 
   setupCardInputFormatting() {
@@ -1033,9 +1043,12 @@ updateStatesDropdown(countryCode, countryStates, stateSelect) {
       case "card":
         this.processCardPayment();
         break;
-      // case 'mercadopago':
-      //     this.handleMercadoPagoPayment();
-      //     break;
+      case "mercadopago":
+        this.showToast(
+          "Please complete the payment using the Mercado Pago button above.",
+          "info"
+        );
+        break;
       case 'oxxo':
           this.processOxxoPayment();
           break;
@@ -1190,126 +1203,52 @@ updateStatesDropdown(countryCode, countryStates, stateSelect) {
     const couponInput = document.getElementById("checkout-coupon");
     const messageDiv = document.getElementById("checkout-coupon-message");
 
-    if (!couponInput || !this.checkoutData) return;
+    if (!couponInput || !messageDiv) return;
 
-    const couponCode = couponInput.value.trim();
+    const couponCode = couponInput.value.trim().toUpperCase();
 
     if (!couponCode) {
-      messageDiv.textContent = "Please enter a coupon code";
-      messageDiv.className = "mt-2 small text-danger";
+      messageDiv.innerHTML =
+        '<span class="text-danger">Please enter a coupon code.</span>';
       return;
     }
 
-    const result = this.validateCoupon(couponCode.toUpperCase());
-
-    if (result.success) {
-      this.checkoutData.discount = result.discount;
-      this.checkoutData.total =
-        this.checkoutData.subtotal -
-        this.checkoutData.discount +
-        this.checkoutData.shipping;
-      this.saveCheckoutData();
-      this.renderOrderSummary();
-
-      messageDiv.textContent = result.message;
-      messageDiv.className = "mt-2 small text-success";
-      this.showToast(result.message, "success");
-
-      setTimeout(() => {
-        const couponSection = document.querySelector(
-          ".checkout-coupon-section"
-        );
-        if (couponSection) {
-          couponSection.remove();
-        }
-      }, 2000);
-    } else {
-      messageDiv.textContent = result.message;
-      messageDiv.className = "mt-2 small text-danger";
-      this.showToast(result.message, "error");
-
-      couponInput.style.borderColor = "#dc3545";
-      setTimeout(() => {
-        couponInput.style.borderColor = "";
-      }, 2000);
-    }
-  }
-
-  validateCoupon(couponCode) {
-    const coupons = {
+    const validCoupons = {
       WELCOME10: 10,
-      SAVE20: 20,
-      FREESHIP: this.checkoutData.shipping,
+      SAVE15: 15,
+      FREESHIP: "free_shipping",
     };
 
-    if (coupons[couponCode]) {
-      return {
-        success: true,
-        discount: coupons[couponCode],
-        message: `Coupon applied! Discount: $${coupons[couponCode]}`,
-      };
-    } else {
-      return {
-        success: false,
-        message: "Invalid coupon code",
-      };
-    }
-  }
+    if (validCoupons[couponCode]) {
+      const discount = validCoupons[couponCode];
+      let discountAmount = 0;
 
-  saveCheckoutData() {
-    this.checkoutData.timestamp = new Date().getTime();
-    localStorage.setItem("checkoutData", JSON.stringify(this.checkoutData));
-  }
-
-  showPaymentMessage(message) {
-    this.showToast(message, "info");
-  }
-
-  showPaymentError(message) {
-    this.showToast(message, "error");
-  }
-
-  handlePayPalError(error) {
-    console.error("PayPal Error:", error);
-
-    let userMessage = "Ha ocurrido un error con PayPal. ";
-
-    if (error.message && error.message.includes("container element removed")) {
-      userMessage +=
-        "Por favor, no cambie de método de pago mientras se procesa la transacción.";
-    } else if (error.message && error.message.includes("blocked")) {
-      userMessage +=
-        "Por favor, desactive su bloqueador de anuncios para continuar con el pago por PayPal.";
-    } else {
-      userMessage += "Por favor, intente nuevamente o use otro método de pago.";
-    }
-
-    this.showToast(userMessage, "error");
-
-    if (window.location.href.includes("ERR_BLOCKED_BY_CLIENT")) {
-      const paypalContainer = document.getElementById("paypal-button-custom");
-      if (paypalContainer) {
-        const warningDiv = document.createElement("div");
-        warningDiv.className = "alert alert-warning mt-3";
-        warningDiv.innerHTML = `
-                    <i class="ri-error-warning-line"></i>
-                    Se detectó un bloqueador de anuncios. Para usar PayPal, por favor:
-                    <ul class="mt-2">
-                        <li>Desactive el bloqueador de anuncios para este sitio</li>
-                        <li>Recargue la página</li>
-                        <li>O elija otro método de pago</li>
-                    </ul>
-                `;
-        paypalContainer.parentNode.insertBefore(
-          warningDiv,
-          paypalContainer.nextSibling
-        );
+      if (typeof discount === "number") {
+        discountAmount = (this.checkoutData.subtotal * discount) / 100;
+      } else if (discount === "free_shipping") {
+        discountAmount = this.checkoutData.shipping;
       }
+
+      this.checkoutData.discount = discountAmount;
+      this.checkoutData.total =
+        this.checkoutData.subtotal +
+        this.checkoutData.shipping -
+        discountAmount;
+      this.checkoutData.coupon = couponCode;
+
+      localStorage.setItem("checkoutData", JSON.stringify(this.checkoutData));
+      this.renderOrderSummary();
+
+      messageDiv.innerHTML = `<span class="text-success">Coupon "${couponCode}" applied successfully!</span>`;
+      couponInput.disabled = true;
+    } else {
+      messageDiv.innerHTML =
+        '<span class="text-danger">Invalid coupon code. Please try another one.</span>';
     }
   }
 }
 
-let checkout;
+// Inicializar checkout cuando el DOM esté listo
 document.addEventListener("DOMContentLoaded", function () {
-  checkout = new Checkout();
+  window.checkout = new Checkout();
 });
