@@ -765,7 +765,7 @@ updateStatesDropdown(countryCode, countryStates, stateSelect) {
   loadPayPalSDK() {
     const script = document.createElement("script");
     script.src =
-      "https://www.paypal.com/sdk/js?client-id=AfakkHFq6TNiB8DjicBPqaBt6dTtPZQssNpcp3-UxbWl6XuFkeYpoxCPJLmrwxS_Ip-Vd1Ln15uhW2IF&currency=USD&intent=capture&components=buttons&disable-funding=venmo,paylater,card";
+      "https://www.paypal.com/sdk/js?client-id=AS1Z8oiTYrJz4otR9AKuh44YsHW99lIVCPOrwVlEnUK48o6MAmgIQLixgcteIZY5YS0M5F7RuRg6LCOW&currency=USD&intent=capture&components=buttons&disable-funding=venmo,paylater,card";
     script.onload = () => {
       console.log("PayPal SDK loaded");
       this.initializePayPal();
